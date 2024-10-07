@@ -17,7 +17,7 @@ RUN pip install \
     --target ${FUNCTION_DIR} \
         awslambdaric
 RUN pip install --target ${FUNCTION_DIR} -r ${FUNCTION_DIR}/requirements.txt
-RUN pip install --target ${FUNCTION_DIR} git+https://github.com/hukkelas/DSFD-Pt
+RUN pip install --target ${FUNCTION_DIR} git+https://github.com/hukkelas/DSFD-Pytorch-Inference.git
 
 # Use a slim version of the base Python image to reduce the final image size
 FROM python:3.11-slim
