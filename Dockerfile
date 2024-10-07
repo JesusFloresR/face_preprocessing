@@ -6,8 +6,8 @@ COPY . ${LAMBDA_TASK_ROOT}
 
 RUN yum update -y && yum install -y git && yum clean all
 
-RUN pip3 install -r requirements.txt
+RUN pip install -r requirements.txt
 
-RUN pip3 install git+https://github.com/hukkelas/DSFD-Pytorch-Inference.git
+RUN pip install git+https://github.com/hukkelas/DSFD-Pytorch-Inference.git
 
 CMD ["lambda_function.lambda_handler"]
