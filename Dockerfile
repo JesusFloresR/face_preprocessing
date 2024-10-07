@@ -6,6 +6,8 @@ RUN yum update -y && yum install -y git && yum clean all
 
 RUN pip install -r requirements.txt
 
+RUN pip install transformers torch
+
 COPY . ${LAMBDA_TASK_ROOT}
 
 RUN pip install git+https://github.com/hukkelas/DSFD-Pytorch-Inference.git
