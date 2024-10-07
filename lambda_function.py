@@ -24,8 +24,9 @@ def lambda_handler(event, context):
 
         response = requests.post(url, json=data)
         url_presigned = response.json()
+        print(url_presigned)
         video = cv2.VideoCapture(url_presigned)
-        
+        print(video)
         num_img = 1
         iterator = 0
         print('Extrayendo frames del rostro')
