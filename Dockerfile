@@ -12,4 +12,4 @@ RUN pip3 install -r requirements.txt
 
 RUN pip3 install git+https://github.com/hukkelas/DSFD-Pytorch-Inference.git
 
-CMD ["python3", "lambda_function.py"]
+CMD ["lambda_function.lambda_handler"]
