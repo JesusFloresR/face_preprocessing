@@ -6,8 +6,8 @@ COPY . /app
 
 WORKDIR /app
 
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
 
-RUN pip install git+https://github.com/hukkelas/DSFD-Pytorch-Inference.git
+RUN pip3 install git+https://github.com/hukkelas/DSFD-Pytorch-Inference.git
 
 CMD ["python3", "lambda_function.py"]
