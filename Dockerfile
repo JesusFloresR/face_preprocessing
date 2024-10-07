@@ -8,6 +8,8 @@ RUN yum update -y && yum install -y git
 
 RUN pip install -r requirements.txt
 
+RUN python -c "import torch; print('Torch version:', torch.__version__)"
+
 RUN pip install git+https://github.com/hukkelas/DSFD-Pytorch-Inference.git
 
 CMD ["lambda_function.lambda_handler"]
