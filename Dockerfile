@@ -11,13 +11,12 @@ RUN apt-get update && apt-get install -y git
 # Copy function code
 RUN mkdir -p ${FUNCTION_DIR}
 COPY . ${FUNCTION_DIR}
-COPY requirements.txt ${FUNCTION_DIR}
 
 # Install the function's dependencies
 RUN pip install \
     --target ${FUNCTION_DIR} \
         awslambdaric
-RUN pip install --target ${FUNCTION_DIR} -r requirements.txt
+RUN pip install --target ${FUNCTION_DIR} -r ${FUNCTION_DIR}/requirements.txt
 RUN pip install --target ${FUNCTION_DIR} git+https://github.com/hukkelas/DSFD-Pt
 
 # Use a slim version of the base Python image to reduce the final image size
