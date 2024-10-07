@@ -4,6 +4,8 @@ COPY requirements.txt ${LAMBDA_TASK_ROOT}
 
 COPY . ${LAMBDA_TASK_ROOT}
 
+WORKDIR ${LAMBDA_TASK_ROOT}
+
 RUN yum update -y && yum install -y git
 
 RUN pip install -r requirements.txt
