@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y git
 # Copy function code
 RUN mkdir -p ${FUNCTION_DIR}
 COPY . ${FUNCTION_DIR}
+COPY requirements.txt ${FUNCTION_DIR}
 
 # Install the function's dependencies
 RUN pip install \
