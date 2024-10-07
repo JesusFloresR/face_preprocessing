@@ -1,17 +1,36 @@
-FROM public.ecr.aws/lambda/python:3.11
+# Define custom function directory
+ARG FUNCTION_DIR="/function"
 
-COPY requirements.txt ${LAMBDA_TASK_ROOT}
+FROM python:3.11 as build-image
 
-COPY . ${LAMBDA_TASK_ROOT}
+# Include global arg in this stage of the build
+ARG FUNCTION_DIR
 
-WORKDIR ${LAMBDA_TASK_ROOT}
+RUN apt-get update && apt-get install -y git
 
-RUN yum update -y && yum install -y git
+# Copy function code
+RUN mkdir -p ${FUNCTION_DIR}
+COPY . ${FUNCTION_DIR}
 
-RUN pip install -r requirements.txt
+# Install the function's dependencies
+RUN pip install \
+    --target ${FUNCTION_DIR} \
+        awslambdaric
+RUN pip install --target ${FUNCTION_DIR} -r requirements.txt
+RUN pip install --target ${FUNCTION_DIR} git+https://github.com/hukkelas/DSFD-Pt
 
-RUN python -c "import torch; print('Torch version:', torch.__version__)"
+# Use a slim version of the base Python image to reduce the final image size
+FROM python:3.11-slim
 
-RUN pip install face-detection
+# Include global arg in this stage of the build
+ARG FUNCTION_DIR
+# Set working directory to function root directory
+WORKDIR ${FUNCTION_DIR}
 
+# Copy in the built dependencies
+COPY --from=build-image ${FUNCTION_DIR} ${FUNCTION_DIR}
+
+# Set runtime interface client as default command for the container runtime
+ENTRYPOINT [ "/usr/local/bin/python", "-m", "awslambdaric" ]
+# Pass the name of the function handler as an argument to the runtime
 CMD ["lambda_function.lambda_handler"]
