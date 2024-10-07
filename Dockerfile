@@ -4,7 +4,7 @@ COPY requirements.txt ${LAMBDA_TASK_ROOT}
 
 COPY . ${LAMBDA_TASK_ROOT}
 
-RUN apt-get update && apt-get install -y git
+RUN yum update -y && yum install -y git && yum clean all
 
 RUN pip3 install -r requirements.txt
 
