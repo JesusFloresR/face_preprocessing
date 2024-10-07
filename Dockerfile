@@ -2,13 +2,11 @@ FROM public.ecr.aws/lambda/python:3.11
 
 COPY requirements.txt ${LAMBDA_TASK_ROOT}
 
-RUN yum update -y && yum install -y git && yum clean all
+COPY . ${LAMBDA_TASK_ROOT}
+
+RUN yum update -y && yum install -y git
 
 RUN pip install -r requirements.txt
-
-RUN pip install transformers torch
-
-COPY . ${LAMBDA_TASK_ROOT}
 
 RUN pip install git+https://github.com/hukkelas/DSFD-Pytorch-Inference.git
 
