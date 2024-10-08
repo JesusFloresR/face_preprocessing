@@ -6,8 +6,6 @@ FROM python:3.11 as build-image
 # Include global arg in this stage of the build
 ARG FUNCTION_DIR
 
-RUN apt-get update && apt-get install -y git
-
 # Copy function code
 RUN mkdir -p ${FUNCTION_DIR}
 COPY . ${FUNCTION_DIR}
@@ -17,7 +15,7 @@ RUN pip install \
     --target ${FUNCTION_DIR} \
         awslambdaric
 RUN pip install --target ${FUNCTION_DIR} -r ${FUNCTION_DIR}/requirements.txt
-RUN pip install --target ${FUNCTION_DIR} git+https://github.com/hukkelas/DSFD-Pytorch-Inference.git
+RUN pip install --target ${FUNCTION_DIR} face-detection --no-deps
 
 # Use a slim version of the base Python image to reduce the final image size
 FROM python:3.11-slim
