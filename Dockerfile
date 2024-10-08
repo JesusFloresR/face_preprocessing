@@ -5,6 +5,7 @@ COPY requirements.txt ${LAMBDA_TASK_ROOT}
 
 # Install the specified packages
 RUN pip install -r requirements.txt
+RUN apt-get update && apt-get install ffmpeg libsm6 libxext6 -y
 RUN pip install face-detection --no-deps
 
 # Copy function code
