@@ -3,7 +3,7 @@ from save_face import save_face
 import cv2
 import requests
 
-def lambda_handler(event, context):
+def handler(event, context):
     try:
         url = 'https://7eo8t81vd3.execute-api.us-east-2.amazonaws.com/service-generate-presigned-url'
         s3=event['Records'][0]['s3']
