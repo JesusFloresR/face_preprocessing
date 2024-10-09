@@ -48,6 +48,7 @@ def save_face(url, img, name):
 def handler(event, context):
     try:
         url = 'https://7eo8t81vd3.execute-api.us-east-2.amazonaws.com/service-generate-presigned-url'
+        print(url)
         s3=event['Records'][0]['s3']
         bucket=s3['bucket']['name']
         key=s3['object']['key']
@@ -97,7 +98,6 @@ def handler(event, context):
             if num_img == 11:
                 break
         video.release()
-        cv2.destroyAllWindows()
         print('Finalizacion de la extraccion del rostro')
 
         return {
@@ -105,6 +105,7 @@ def handler(event, context):
             'body': 'ok'
         }
     except Exception as e:
+        print(e)
         return {
             'statusCode': 500,
             'body': json.dumps(str(e))
