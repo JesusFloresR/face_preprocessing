@@ -1,12 +1,22 @@
 import json
 import cv2
 import requests
-import face_detection
 import imutils
 
-def extract_face(img):
-    detector = face_detection.build_detector("RetinaNetMobileNetV1", confidence_threshold = 0.5, nms_iou_threshold = 0.3)
+initialized = False
+detector = None
 
+def initModule():
+  global initialized
+  global detector
+
+  if initialized:
+     return
+  import face_detection
+  detector = face_detection.build_detector("RetinaNetMobileNetV1", confidence_threshold = 0.5, nms_iou_threshold = 0.3)
+  initialized = True
+
+def extract_face(img):
     frame = imutils.resize(img, width=640)
     auxFrame = frame.copy()
     # gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -48,6 +58,7 @@ def save_face(url, img, name):
 
 def handler(event, context):
     try:
+        initModule()
         url = 'https://7eo8t81vd3.execute-api.us-east-2.amazonaws.com/service-generate-presigned-url'
         print(url)
         s3=event['Records'][0]['s3']
