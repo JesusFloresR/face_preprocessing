@@ -3,6 +3,9 @@ import cv2
 import requests
 import imutils
 
+import os
+os.environ['TORCH_HOME'] = '/tmp'
+
 initialized = False
 detector = None
 
