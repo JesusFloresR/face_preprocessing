@@ -5,8 +5,7 @@ COPY requirements.txt ${LAMBDA_TASK_ROOT}
 
 # Install the specified packages
 RUN pip install -r requirements.txt
-RUN pip install opencv-python-headless
-RUN pip install face-detection --no-deps
+RUN pip install face-detection --no-deps 
 
 # Copy function code
 COPY lambda_function.py ${LAMBDA_TASK_ROOT}
