@@ -1,5 +1,7 @@
 FROM public.ecr.aws/lambda/python:3.11
 
+COPY RetinaFace_mobilenet025.pth /tmp/hub/checkpoints
+
 # Copy requirements.txt
 COPY requirements.txt ${LAMBDA_TASK_ROOT}
 
