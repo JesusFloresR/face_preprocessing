@@ -4,8 +4,9 @@ import requests
 import face_detection
 import imutils
 
-detector = face_detection.build_detector("RetinaNetMobileNetV1", confidence_threshold = 0.5, nms_iou_threshold = 0.3)
 def extract_face(img):
+    detector = face_detection.build_detector("RetinaNetMobileNetV1", confidence_threshold = 0.5, nms_iou_threshold = 0.3)
+
     frame = imutils.resize(img, width=640)
     auxFrame = frame.copy()
     # gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
