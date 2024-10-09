@@ -2,6 +2,7 @@ import json
 import cv2
 import requests
 import imutils
+import shutil
 
 import os
 os.environ['TORCH_HOME'] = '/tmp'
@@ -62,6 +63,7 @@ def save_face(url, img, name):
 def handler(event, context):
     try:
         print('Iniciando la lambda')
+        shutil('/var/task/RetinaFace_mobilenet025.pth', '/tmp/hub/checkpoints/')
         initModule()
         url = 'https://7eo8t81vd3.execute-api.us-east-2.amazonaws.com/service-generate-presigned-url'
         print(url)
