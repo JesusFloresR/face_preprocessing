@@ -129,4 +129,3 @@ def handler(event, context):
             'body': json.dumps(str(e))
         }
     
-handler('','')
