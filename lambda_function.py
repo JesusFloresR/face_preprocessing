@@ -60,6 +60,7 @@ def save_face(url, img, name):
     return xmin, ymin, xmax, ymax
 
 def get_retina_face_mobilenet():
+    id = 6
     name = ''
     bucket = 'vigilanteye-models'
     data = {
