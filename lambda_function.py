@@ -63,7 +63,18 @@ def save_face(url, img, name):
 def handler(event, context):
     try:
         print('Iniciando la lambda')
-        shutil.move('/var/task/RetinaFace_mobilenet025.pth', '/tmp/hub/checkpoints/')
+        destination_directory = '/tmp/hub/checkpoints'
+        source_file = '/var/task/RetinaFace_mobilenet025.pth'
+
+        os.makedirs(destination_directory, exist_ok=True)
+        shutil.move(source_file, destination_directory)
+        if not os.path.exists(source_file) and os.path.exists(os.path.join(destination_directory, os.path.basename(source_file))):
+            print(f'Archivo movido a {destination_directory}')
+        else:
+            print('Error al mover el archivo.')
+        print('Iniciando la lambda')
+
+        # shutil.move('/var/task/RetinaFace_mobilenet025.pth', '/tmp/hub/checkpoints/')
         initModule()
         url = 'https://7eo8t81vd3.execute-api.us-east-2.amazonaws.com/service-generate-presigned-url'
         print(url)
