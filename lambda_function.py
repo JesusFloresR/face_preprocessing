@@ -93,7 +93,7 @@ def handler(event, context):
             print('creo')
 
             # Guarda el contenido en un archivo local
-            with open(destination_directory, 'wb') as f:
+            with open(destination_directory + '/RetinaFace_mobilenet025.pth', 'wb') as f:
                 f.write(response.content)
             print(f'Archivo descargado y guardado en {destination_directory}')
         else:
