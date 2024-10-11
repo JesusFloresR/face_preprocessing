@@ -59,20 +59,40 @@ def save_face(url, img, name):
     # cv2.imwrite(path + '/' + name + '.jpg',face)
     return xmin, ymin, xmax, ymax
 
+def get_retina_face_mobilenet():
+    name = ''
+    bucket = 'vigilanteye-models'
+    data = {
+        'method': 'get_object',
+        'id': int(id),
+        'name': name,
+        'bucket': bucket,
+        'key': 'RetinaFace_mobilenet025.pth'
+    }
+
+    url = 'https://7eo8t81vd3.execute-api.us-east-2.amazonaws.com/service-generate-presigned-url'
+
+    response = requests.post(url, json=data)
+    url_presigned = response.json()
+    return requests.get(url_presigned)
+
 
 def handler(event, context):
     try:
         print('Iniciando la lambda')
         destination_directory = '/tmp/hub/checkpoints'
-        source_file = '/var/task/RetinaFace_mobilenet025.pth'
+        # source_file = '/var/task/RetinaFace_mobilenet025.pth'
+        response = get_retina_face_mobilenet()
+        if response.status_code == 200:
+            # Asegúrate de que el directorio /tmp existe
+            os.makedirs(os.path.dirname(destination_directory), exist_ok=True)
 
-        os.makedirs(destination_directory, exist_ok=True)
-        shutil.move(source_file, destination_directory)
-        if not os.path.exists(source_file) and os.path.exists(os.path.join(destination_directory, os.path.basename(source_file))):
-            print(f'Archivo movido a {destination_directory}')
+            # Guarda el contenido en un archivo local
+            with open(destination_directory, 'wb') as f:
+                f.write(response.content)
+            print(f'Archivo descargado y guardado en {destination_directory}')
         else:
-            print('Error al mover el archivo.')
-        print('Iniciando la lambda')
+            print('Error al descargar el archivo:', response.status_code)
 
         # shutil.move('/var/task/RetinaFace_mobilenet025.pth', '/tmp/hub/checkpoints/')
         initModule()
