@@ -60,23 +60,25 @@ def save_face(url, img, name):
     return xmin, ymin, xmax, ymax
 
 def get_retina_face_mobilenet():
-    id = 6
+    id = '6'
     name = ''
     bucket = 'vigilanteye-models'
+    # bucket='vigilenteye-faces-video'
+    key='RetinaFace_mobilenet025.pth'
     data = {
         'method': 'get_object',
         'id': int(id),
         'name': name,
         'bucket': bucket,
-        'key': 'RetinaFace_mobilenet025.pth'
+        'key': key
     }
 
     url = 'https://7eo8t81vd3.execute-api.us-east-2.amazonaws.com/service-generate-presigned-url'
 
     response = requests.post(url, json=data)
     url_presigned = response.json()
+    print(url_presigned)
     return requests.get(url_presigned)
-
 
 def handler(event, context):
     try:
@@ -86,7 +88,9 @@ def handler(event, context):
         response = get_retina_face_mobilenet()
         if response.status_code == 200:
             # Asegúrate de que el directorio /tmp existe
+            print('creando')
             os.makedirs(destination_directory, exist_ok=True)
+            print('creo')
 
             # Guarda el contenido en un archivo local
             with open(destination_directory, 'wb') as f:
