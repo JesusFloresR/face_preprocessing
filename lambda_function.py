@@ -86,7 +86,7 @@ def handler(event, context):
         response = get_retina_face_mobilenet()
         if response.status_code == 200:
             # Asegúrate de que el directorio /tmp existe
-            os.makedirs(os.path.dirname(destination_directory), exist_ok=True)
+            os.makedirs(destination_directory, exist_ok=True)
 
             # Guarda el contenido en un archivo local
             with open(destination_directory, 'wb') as f:
