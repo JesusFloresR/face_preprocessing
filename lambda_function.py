@@ -138,7 +138,7 @@ def handler(event, context):
                     'name': name,
                     'content_type': 'image/jpg',
                     'bucket': bucket,
-                    'key': id + '/images/' + name + str(num_img) + '.jpg'
+                    'key': id + '/images/' + name + '/' + name + str(num_img) + '.jpg'
                 }
 
                 response = requests.post(url, json=data)
