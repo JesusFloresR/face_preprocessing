@@ -2,7 +2,7 @@ import json
 import cv2
 import requests
 import imutils
-import shutil
+import boto3
 
 import os
 os.environ['TORCH_HOME'] = '/tmp'
@@ -153,6 +153,19 @@ def handler(event, context):
                 break
         video.release()
         print('Finalizacion de la extraccion del rostro')
+
+        payload = {
+            'user_id': id
+        }
+
+        lambda_client = boto3.client('lambda')
+
+        # Invoca la función Lambda
+        response = lambda_client.invoke(
+            FunctionName='vigilanteye_train_model',
+            InvocationType='Event',  # Para no esperar la respuesta
+            Payload=json.dumps(payload)
+        )
 
         return {
             'statusCode': 200,
