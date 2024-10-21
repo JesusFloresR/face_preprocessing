@@ -116,7 +116,7 @@ def handler(event, context):
             'id': int(id),
             'name': name,
             'bucket': bucket,
-            'key': id + '/video/' + name + '.mp4'
+            'key': id + '/video/' + name + '/' + name + '.mp4'
         }
 
         response = requests.post(url, json=data)
