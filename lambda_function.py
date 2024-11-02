@@ -149,7 +149,7 @@ def handler(event, context):
                 xmin_, ymin_, xmax_, ymax_ = save_face(url_presigned, frame_copy, name + str(num_img))
                 num_img += 1
 
-            if num_img == 151:
+            if num_img == 201:
                 break
         video.release()
         print('Finalizacion de la extraccion del rostro')
