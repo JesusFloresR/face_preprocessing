@@ -131,7 +131,7 @@ def handler(event, context):
             iterator += 1
             check,frame = video.read()
 
-            if iterator % 2 == 0:
+            if iterator % 3 == 0:
                 data = {
                     'method': 'put_object',
                     'id': int(id),
